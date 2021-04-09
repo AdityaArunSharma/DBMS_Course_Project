@@ -1,0 +1,19 @@
+1) select user				-> completed by ashna
+
+2) login				-> completed by ananya
+
+3) customer				-> completed by aman
+
+4) administration (home screen) 	-> pending by aman
+
+5) add owner				-> pending by aman
+
+6) add agent 				-> pending by ananya
+
+7) add property ( for admin) 		-> pending by ashna
+
+8) agent profile 			-> pending by ashna
+
+9) agent (home screen) 			-> pending by ashna
+
+10)add property ( for agent) 		-> pending by ananya

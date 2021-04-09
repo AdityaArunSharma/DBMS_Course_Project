@@ -1,0 +1,40 @@
+
+houseID = combination of digits and alphabets that uniquely identifies a house 
+agentID = combination of digits and alphabets that uniquely identifies a agent
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+1) houses_details      ( houseID , price , rent , address , #bedrooms , forSale ) 	primrary key -> houseID
+
+2) agent_details       ( agentID , agentName, ... )  					primrary key -> agentID
+
+3) agent_contactNumber ( agentID , contactNumber )	        			primrary key -> agentID, contactNumber | foreign key -> agent_details(agentID)
+
+4) agent_can_sell      ( agentID , houseID )        					primrary key -> agentID, houseID | foreign key -> houses_details(houseID) , agent_details(agentID)
+
+5) agent_can_rent      ( agentID , houseID )        					primrary key -> agentID, houseID | foreign key -> houses_details(houseID) , agent_details(agentID)
+
+6) agent_sold          ( agentID , houseID , salesDate )          			primrary key -> agentID, houseID | foreign key -> houses_details(houseID) , agent_can_sold(agentID)
+
+7) agent_rented        ( agentID , houseID , rentDate )          			primrary key -> agentID, houseID | foreign key -> houses_details(houseID) , agent_can_rent(agentID)
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+(a) select address from houses_details where rent >= 20000 and rent <= 40000
+
+(b) select houseID,rent,address,#bedrooms from ( house_details join agent_can_rent using(houseID) ) join agent_contactNumber using(agentID) where #bedrooms >=2 and rent <= 10000
+
+(c) select agentName from agentDetails where agentId in ( select agentID from agent_sold join house_details using(houseID) group by agentID having sum(price) = ( select max(sum(price) from agent_sold join house_details using(houseID) group by agentID )
+
+(d) select * from house_details where forSale = 'YES'
+
+(e) (i) select * from house_details where houseID in ( select houseID from house_details where price = ( select max(price) from house_details )
+    (ii) select * from house_details where houseID in ( select houseID from house_details where rent = ( select max(rent) from house_details )
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+5.
+(b) 1. select * from agent_sold join house_detais using(houseID) where agentID = input_agentID
+    2. select * from agent_rented join house_details using(houseID) where agentID = input_agentID
+
+(c) insert in agent_sold and agent_rented
