@@ -512,7 +512,7 @@ public class Backend
     {
         username = username.trim();
         password = password.trim();
-        System.out.println("Backend : Checking for mode "+mode);
+//        System.out.println("Backend : Checking for mode "+mode);
         if(username.isEmpty() || password.isEmpty())
         {
             System.out.println("Error : Empty fields detected");
@@ -520,10 +520,10 @@ public class Backend
         }
         if(mode.equalsIgnoreCase(Constants.mode_admin))
         {
-            System.out.println("backend : mode = "+mode);
+//            System.out.println("backend : mode = "+mode);
             if(password.equalsIgnoreCase(Constants.adminPassword) && username.equalsIgnoreCase(Constants.adminUsername))
             {
-                System.out.println("Right login details for admin");
+//                System.out.println("Right login details for admin");
                 return true;
             }
             return false;
@@ -565,7 +565,7 @@ public class Backend
                     System.out.println("Error : Wrong password");
                     return false;
                 }
-                System.out.println("Right login details for agent");
+//                System.out.println("Right login details for agent");
                 return true;
             }
             catch (Exception e)

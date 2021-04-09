@@ -76,11 +76,11 @@ public class LoginScreen {
 			public void actionPerformed(ActionEvent e)
 			{
 
-				System.out.println("Username "+textField.getText());
+//				System.out.println("Username "+textField.getText());
 				String username = textField.getText();
 				String password = new String(passwordField.getPassword());
-				System.out.println("Mode : "+mode);
-				System.out.println("Password "+password);
+//				System.out.println("Mode : "+mode);
+//				System.out.println("Password "+password);
 				try
 				{
 					Backend backend = new Backend(Constants.databaseUserName,Constants.databasePassword,Constants.databaseName);
@@ -88,32 +88,30 @@ public class LoginScreen {
 					backend.closeDatabase();
 					if(mode.equalsIgnoreCase(Constants.mode_admin) && loginResult)
 					{
-						System.out.println("Successfully logged in :)");
+						System.out.println("Frontend : Successfully logged in :)");
 						new AlertBoxScreen("Login Successful");
 						frame.dispose();
-						System.out.println("Going to open Administrator Screen");
+						System.out.println("Frontend : Going to open Administrator Screen");
 						// Call Admin Class
 					}
 					else if(mode.equalsIgnoreCase(Constants.mode_agent) && loginResult)
 					{
-						System.out.println("Successfully logged in :)");
+						System.out.println("Frontend : Successfully logged in :)");
 						new AlertBoxScreen("Login Successful");
 						frame.dispose();
-						System.out.println("Going to open Agent screen for agent id "+username);
+						System.out.println("Frontend : Going to open Agent screen for agent id "+username);
 						// Call Agent Class
 					}
 					else
 					{
-						System.out.println("Invalid login details");
+						System.out.println("Frontend : Invalid login details");
 						new AlertBoxScreen("Invalid Login details");
 					}
 				}
 				catch (Exception exception)
 				{
-					new AlertBoxScreen("Error in Connection with Database");
+					new AlertBoxScreen("Error in Connecting with SQL Database");
 				}
-
-				
 			}
 		});
 		btnNewButton.setForeground(Color.BLACK);
