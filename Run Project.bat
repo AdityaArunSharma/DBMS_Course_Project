@@ -1,3 +1,10 @@
 cd src
+javac Agent.java
+javac AlertBoxScreen.java
+javac Backend.java
+javac Constants.java
+javac LoginScreen.java
+javac QueryResultDisplayer.java
+javac UserPageScreen.java
 javac Main.java
 java Main
