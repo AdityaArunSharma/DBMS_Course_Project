@@ -75,12 +75,8 @@ public class LoginScreen {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{
-
-//				System.out.println("Username "+textField.getText());
 				String username = textField.getText();
 				String password = new String(passwordField.getPassword());
-//				System.out.println("Mode : "+mode);
-//				System.out.println("Password "+password);
 				try
 				{
 					Backend backend = new Backend(Constants.databaseUserName,Constants.databasePassword,Constants.databaseName);
