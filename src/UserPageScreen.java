@@ -96,7 +96,7 @@ public class UserPageScreen {
 			{
 				System.out.println("Frontend : Admin Mode Selected");
 				new LoginScreen(Constants.mode_admin);
-				frame.dispose();
+//				frame.dispose();
 			}
 		});
 
@@ -106,7 +106,7 @@ public class UserPageScreen {
 			{
 				System.out.println("Frontend : Agent Mode Selected");
 				new LoginScreen(Constants.mode_agent);
-				frame.dispose();
+//				frame.dispose();
 			}
 		});
 
@@ -116,9 +116,9 @@ public class UserPageScreen {
 			{
 				System.out.println("Frontend : Customer Mode Selected");
 				// Call Customer Screen
+				new CustomerScreen();
 
-
-				frame.dispose();
+//				frame.dispose();
 			}
 		});
 

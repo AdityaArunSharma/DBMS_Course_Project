@@ -176,12 +176,13 @@ public class Backend
         ResultSet rs_countRows = stmt_countRows.executeQuery(query_countRows);
         rs_countRows.next();
         int numberRows = rs_countRows.getInt(1);
-        String streetName[] = new String[numberRows];
+        String streetName[] = new String[numberRows+1];
         int index = 0;
         while(rs.next())
         {
             streetName[index++] = rs.getString(1);
         }
+        streetName[index] = "#Search All Street";
         return streetName;
     }
 

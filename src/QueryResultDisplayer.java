@@ -11,7 +11,7 @@ public class QueryResultDisplayer
     {
 
         frame1 = new JFrame("Database Search Result");
-        frame1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        frame1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame1.setLayout(new BorderLayout());
         DefaultTableModel model = new DefaultTableModel();
         ResultSetMetaData rsmd = rs.getMetaData();

@@ -6,5 +6,6 @@ javac Constants.java
 javac LoginScreen.java
 javac QueryResultDisplayer.java
 javac UserPageScreen.java
+javac CustomerScreen.java
 javac Main.java
 java Main
