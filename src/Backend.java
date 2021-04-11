@@ -44,7 +44,7 @@ public class Backend
 
     public void customer_searchProperties(String street,String numberOfBedrooms,String typeOfProperty,String minimumPrice,String maximumPrice) throws Exception
     {
-        String query = "SELECT * FROM property ";
+        String query = "SELECT * FROM property natural join agent_contact ";
 
 
         street = street.trim();
@@ -125,7 +125,7 @@ public class Backend
             }
             else
             {
-                System.out.println("Error : type of property not selected");
+                System.out.println("Backend Error : type of property not selected");
                 return;
             }
             featurePresent[3] = true;
@@ -151,12 +151,12 @@ public class Backend
             }
             else
             {
-                System.out.println("Error : type of property not selected");
+                System.out.println("Backend Error : type of property not selected");
                 return;
             }
             featurePresent[4] = true;
         }
-        System.out.println(query);
+        System.out.println("Query Sent to Database : "+query);
         Statement stmt=conn.createStatement();
 
         new QueryResultDisplayer(stmt.executeQuery(query));
@@ -170,9 +170,11 @@ public class Backend
     {
         Statement stmt = conn.createStatement();
         String query = "select distinct street from property";
+        System.out.println("Query Sent to Database : "+query);
         ResultSet rs = stmt.executeQuery(query);
         String query_countRows = "select count(distinct street) from property";
         Statement stmt_countRows = conn.createStatement();
+        System.out.println("Query Sent to Database : "+query_countRows);
         ResultSet rs_countRows = stmt_countRows.executeQuery(query_countRows);
         rs_countRows.next();
         int numberRows = rs_countRows.getInt(1);
@@ -201,21 +203,23 @@ public class Backend
         agentID = agentID.trim();
         if(agentID.isEmpty())
         {
-            System.out.println("Error : Empty agent id detected");
+            System.out.println("Backend Error : Empty agent id detected");
             return null;
         }
         Statement stmt = conn.createStatement();
         String query = "select * from agent where agent_id = "+agentID;
+        System.out.println("Query Sent to Database : "+query);
         ResultSet  rs = stmt.executeQuery(query);
         if (!rs.isBeforeFirst() ) {
-            System.out.println("Error : No matching agent id in database found");
+            System.out.println("Backend Error : No matching agent id in database found");
             return null;
         }
         rs.next();
         Agent agent = new Agent(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4));
         Statement stmt_contactNumbers = conn.createStatement();
         String query_contactNumber = "select phone_no from agent_contact where agent_id = "+agentID;
-        System.out.println(query_contactNumber);
+
+        System.out.println("Query Sent to Database : "+query);
         ResultSet rs_contactNumber = stmt_contactNumbers.executeQuery(query_contactNumber);
         while(rs_contactNumber.next())
         {
@@ -227,7 +231,7 @@ public class Backend
         Statement stmt_totalRented = conn.createStatement();
         String query_totalSold = "select selling_price from selling_details as SD join property using(property_id) where SD.agent_id = "+agentID+" and SD.property_type = 'sell'";
         String query_totalRented = "select rent from selling_details as SD join property using(property_id) where SD.agent_id = "+agentID+" and SD.property_type = 'rent'";
-
+        System.out.println("Query Sent to Database : "+query_totalSold);
         ResultSet rs_totalSold = stmt_totalSold.executeQuery(query_totalSold);
 
         if(rs_totalSold.isBeforeFirst())
@@ -237,7 +241,7 @@ public class Backend
                 agent.totalSold+=rs_totalSold.getInt(1);
             }
         }
-
+        System.out.println("Query Sent to Database : "+query_totalRented);
         ResultSet rs_totalRented = stmt_totalRented.executeQuery(query_totalRented);
 
         if(rs_totalRented.isBeforeFirst())
@@ -257,11 +261,12 @@ public class Backend
         agentID = agentID.trim();
         if(agentID.isEmpty())
         {
-            System.out.println("Error : Empty agent id detected");
+            System.out.println("Backend Error : Empty agent id detected");
             return;
         }
         Statement stmt = conn.createStatement();
         String query = "select * from property where agent_id = "+agentID;
+        System.out.println("Query Sent to Database : "+query);
         new QueryResultDisplayer(stmt.executeQuery(query));
     }
 
@@ -270,11 +275,12 @@ public class Backend
         agentID = agentID.trim();
         if(agentID.isEmpty())
         {
-            System.out.println("Error : Empty agent id detected");
+            System.out.println("Backend Error : Empty agent id detected");
             return;
         }
         Statement stmt = conn.createStatement();
         String  query = "select * from selling_details as SD join property using(property_id) where SD.agent_id = "+agentID+" and SD.property_type = 'rent'";
+        System.out.println("Query Sent to Database : "+query);
         new QueryResultDisplayer(stmt.executeQuery(query));
     }
 
@@ -283,11 +289,12 @@ public class Backend
         agentID = agentID.trim();
         if(agentID.isEmpty())
         {
-            System.out.println("Error : Empty agent id detected");
+            System.out.println("Backend Error : Empty agent id detected");
             return;
         }
         Statement stmt = conn.createStatement();
         String  query = "select * from selling_details as SD join property using(property_id) where SD.agent_id = "+agentID+" and SD.property_type = 'sell'";
+        System.out.println("Query Sent to Database : "+query);
         new QueryResultDisplayer(stmt.executeQuery(query));
     }
 
@@ -296,11 +303,12 @@ public class Backend
         agentID = agentID.trim();
         if(agentID.isEmpty())
         {
-            System.out.println("Error : Empty agent id detected");
+            System.out.println("Backend Error : Empty agent id detected");
             return;
         }
         Statement stmt = conn.createStatement();
-        String query = "select name,contact_no from owner natural join property where agent_id = "+agentID;
+        String query = "select name,contact_no,property_id,property_type from owner natural join property where agent_id = "+agentID;
+        System.out.println("Query Sent to Database : "+query);
         new QueryResultDisplayer(stmt.executeQuery(query));
     }
 
@@ -315,12 +323,13 @@ public class Backend
         {
             if(property_id.isEmpty() || agent_id.isEmpty() || data.isEmpty() || property_type.isEmpty() || buyer_name.isEmpty())
             {
-                System.out.println("Error : Empty fields detected");
+                System.out.println("Backend Error : Empty fields detected");
                 return false;
             }
             List<String> propertiesAssigned = new ArrayList<>();
             Statement stmt_propertyAssigned = conn.createStatement();
             String query_propertyAssigned = "select property_id from property where agent_id = "+agent_id;
+            System.out.println("Query Sent to Database : "+query_propertyAssigned);
             ResultSet rs_propertyAssigned = stmt_propertyAssigned.executeQuery(query_propertyAssigned);
             while(rs_propertyAssigned.next())
             {
@@ -337,32 +346,35 @@ public class Backend
             }
             if(!propertyExist)
             {
-                System.out.println("Error : Property not assigned to agent");
+                System.out.println("Backend Error : Property not assigned to agent");
                 return false;
             }
             Statement stmt_type_available = conn.createStatement();
             String query_type_available = "select property_type,availability from property where property_id = '"+property_id+"'";
+            System.out.println("Query Sent to Database : "+query_type_available);
             ResultSet rs_type_available = stmt_type_available.executeQuery(query_type_available);
             rs_type_available.next();
             String type = rs_type_available.getString(1);
             String availability = rs_type_available.getString(2);
             if(!type.equalsIgnoreCase(property_type))
             {
-                System.out.println("Error : Wrong property type given");
+                System.out.println("Backend Error : Wrong property type given");
                 return false;
             }
             if(availability.equalsIgnoreCase("no"))
             {
-                System.out.println("Error : Property not available");
+                System.out.println("Backend Error : Property not available");
                 return false;
             }
             Statement stmt = conn.createStatement();
             String query = "insert into selling_details values ("+property_id+","+agent_id+",'"+data+"','"+property_type+"','"+buyer_name+"')";
+            System.out.println("Query Sent to Database : "+query);
             int n = stmt.executeUpdate(query);
             Statement s = conn.createStatement();
             ResultSet r = s.executeQuery("select * from selling_details");
             Statement stmt_changeAvailability = conn.createStatement();
             String query_changeAvailability = "update property set availability = 'no' where property_id = '"+property_id+"'";
+            System.out.println("Query Sent to Database : "+query_changeAvailability);
             stmt_changeAvailability.executeUpdate(query_changeAvailability);
         }
         catch (Exception e)
@@ -381,6 +393,7 @@ public class Backend
     {
         Statement stmt = conn.createStatement();
         ResultSet rs =  stmt.executeQuery("select * from property where property_type = 'rent' and  availability like '%yes%' ");
+        System.out.println("Query Sent to Database : "+"select * from property where property_type = 'rent' and  availability like '%yes%' ");
         new QueryResultDisplayer(rs);
     }
 
@@ -388,6 +401,7 @@ public class Backend
     {
         Statement stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery("select * from property where property_type = 'sell' and availability like '%yes%'");
+        System.out.println("Query Sent to Database : "+"select * from property where property_type = 'sell' and availability like '%yes%'");
         new QueryResultDisplayer(rs);
     }
 
@@ -409,17 +423,17 @@ public class Backend
         if( property_id.isEmpty() || house_no.isEmpty() || street.isEmpty() || city.isEmpty() || agent_id.isEmpty() || pincode.isEmpty() ||
             no_of_bedrooms.isEmpty() || availability.isEmpty() || property_type.isEmpty() || size.isEmpty())
         {
-            System.out.println("Error : Empty field detected");
+            System.out.println("Backend Error : Empty field detected");
             return false;
         }
         if(property_type.equalsIgnoreCase("rent") && rent.isEmpty())
         {
-            System.out.println("Error : Rent field is empty");
+            System.out.println("Backend Error : Rent field is empty");
             return false;
         }
         if(property_type.equalsIgnoreCase("sell") && selling_price.isEmpty())
         {
-            System.out.println("Error : Selling price is empty");
+            System.out.println("Backend Error : Selling price is empty");
             return false;
         }
         if(property_type.equalsIgnoreCase("rent"))
@@ -440,6 +454,7 @@ public class Backend
             Statement stmt = conn.createStatement();
             String query = "insert into property values ('"+property_id+"',"+house_no+",'"+street+"','"+city+"',"+pincode+","+agent_id+",'"+property_type+"','"+
                                                             availability+"',"+no_of_bedrooms+","+size+","+rent+","+selling_price+")";
+            System.out.println("Query Sent to Database : "+query);
             stmt.executeUpdate(query);
         }
         catch (Exception e)
@@ -450,6 +465,26 @@ public class Backend
         return true;
     }
 
+    public List<String> admin_getAgentIDs()
+    {
+        List<String> agent_ids = new ArrayList<>();
+        try {
+                Statement stmt = conn.createStatement();
+                String query = "select agent_id from agent";
+            System.out.println("Query Sent to Database : "+query);
+                ResultSet rs = stmt.executeQuery(query);
+                while(rs.next())
+                {
+                    agent_ids.add(rs.getString(1));
+                }
+                return agent_ids;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
+        }
+        return null;
+    }
 
     public boolean admin_addAgent(String agent_id,String agent_name,String email,String password,String contact_number[])
     {
@@ -459,18 +494,20 @@ public class Backend
         password = password.trim();
         if( agent_id.isEmpty() || agent_name.isEmpty() || email.isEmpty() || password.isEmpty() || contact_number.length==0)
         {
-            System.out.println("Error : Empty field detected");
+            System.out.println("Backend Error : Empty field detected");
             return false;
         }
         try {
             Statement stmt = conn.createStatement();
             String query = "insert into agent values ("+agent_id+",'"+agent_name+"','"+email+"','"+password+"')";
+            System.out.println("Query Sent to Database : "+query);
             stmt.executeUpdate(query);
             Statement stmt2 = conn.createStatement();
             String query2 = "";
             for(int x=0;x<contact_number.length;x++)
             {
                 query2 = "insert into agent_contact values ('"+contact_number[x]+"',"+agent_id+")";
+                System.out.println("Query Sent to Database : "+query2);
                 stmt2.executeUpdate(query2);
             }
         }
@@ -489,13 +526,14 @@ public class Backend
         propert_id = propert_id.trim();
         if(name.isEmpty() || contact_no.isEmpty() || propert_id.isEmpty())
         {
-            System.out.println("Error : Empty field detected");
+            System.out.println("Backend Error : Empty field detected");
             return false;
         }
         try
         {
             Statement stmt = conn.createStatement();
             String query = "insert into owner values ('"+name+"','"+contact_no+"',"+propert_id+")";
+            System.out.println("Query Sent to Database : "+query);
             stmt.executeUpdate(query);
         }
         catch (Exception e)
@@ -515,7 +553,7 @@ public class Backend
         password = password.trim();
         if(username.isEmpty() || password.isEmpty())
         {
-            System.out.println("Error : Empty fields detected");
+            System.out.println("Backend Error : Empty fields detected");
             return false;
         }
         if(mode.equalsIgnoreCase(Constants.mode_admin))
@@ -532,6 +570,7 @@ public class Backend
             {
                 Statement stmt_agentIDs = conn.createStatement();
                 String query_agentIds = "select agent_id from agent";
+                System.out.println("Query Sent to Database : "+query_agentIds);
                 ResultSet rs_agentIds = stmt_agentIDs.executeQuery(query_agentIds);
                 List<String> agentIds = new ArrayList<>();
                 while(rs_agentIds.next())
@@ -549,24 +588,25 @@ public class Backend
                 }
                 if(!correctUsername)
                 {
-                    System.out.println("Error : Wrong username");
+                    System.out.println("Backend Error : Wrong username");
                     return false;
                 }
                 Statement stmt_getPassword = conn.createStatement();
                 String query_getPassword = "select password from agent where agent_id = '"+username+"'";
+                System.out.println("Query Sent to Database : "+query_getPassword);
                 ResultSet rs_getPassword = stmt_getPassword.executeQuery(query_getPassword);
                 rs_getPassword.next();
                 String correctPassword = rs_getPassword.getString(1);
                 if(!correctPassword.equalsIgnoreCase(password))
                 {
-                    System.out.println("Error : Wrong password");
+                    System.out.println("Backend Error : Wrong password");
                     return false;
                 }
                 return true;
             }
             catch (Exception e)
             {
-                System.out.println("Error : Login");
+                System.out.println("Backend Error : Login");
                 return false;
             }
         }

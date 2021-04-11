@@ -7,5 +7,13 @@ javac LoginScreen.java
 javac QueryResultDisplayer.java
 javac UserPageScreen.java
 javac CustomerScreen.java
+javac AdministratorScreen.java
+javac AddPropertyScreen.java
+javac AgentScreen.java
+javac AgentProfileScreen.java
+javac SelectAgentScreen.java
+javac AddAgentScreen.java
+javac AddOwnerScreen.java
+javac AddPropertyAgentScreen.java
 javac Main.java
 java Main

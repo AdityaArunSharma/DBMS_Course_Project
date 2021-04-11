@@ -79,7 +79,6 @@ public class CustomerScreen {
 
 		try {
 			String streetNameList[] = new Backend(Constants.databaseUserName,Constants.databasePassword,Constants.databaseName).customer_getStreetNames();
-
 			cb = new JComboBox(streetNameList);
 			cb.setBounds(533, 286, 249, 40);
 			frame.getContentPane().add(cb);

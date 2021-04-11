@@ -89,6 +89,7 @@ public class LoginScreen {
 						frame.dispose();
 						System.out.println("Frontend : Going to open Administrator Screen");
 						// Call Admin Class
+						new AdministratorScreen();
 					}
 					else if(mode.equalsIgnoreCase(Constants.mode_agent) && loginResult)
 					{
@@ -97,6 +98,7 @@ public class LoginScreen {
 						frame.dispose();
 						System.out.println("Frontend : Going to open Agent screen for agent id "+username);
 						// Call Agent Class
+						new AgentScreen(username);
 					}
 					else
 					{
