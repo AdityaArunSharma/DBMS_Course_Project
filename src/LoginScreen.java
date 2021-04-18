@@ -50,7 +50,7 @@ public class LoginScreen {
 	private void initialize() {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 656, 484);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.getContentPane().setBackground(new Color(245, 91, 84));
 		

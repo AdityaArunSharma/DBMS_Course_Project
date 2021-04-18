@@ -126,18 +126,13 @@ public class AddAgentScreen {
 				String agent_name = textField_1.getText();
 				String email = textField_2.getText();
 				String password = passwordField.getText();
-//				System.out.println("agent id "+agent_id);
-//				System.out.println("agent name "+agent_name);
-//				System.out.println("email "+email);
-//				System.out.println("password "+password);
 				String contacts = textField_4.getText();
 				contacts = contacts.trim();
-				String contact_array[] = contacts.split(",",0);
+				String[] contact_array = contacts.split(",",0);
 				for(int x=0;x<contact_array.length;x++)
 				{
 					contact_array[x] = contact_array[x].trim();
 				}
-//				System.out.println(Arrays.toString(contact_array));
 				try
 				{
 					Backend backend = new Backend(Constants.databaseUserName,Constants.databasePassword,Constants.databaseName);
