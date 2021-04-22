@@ -1,14 +1,11 @@
 import java.awt.EventQueue;
 
-import javax.swing.JFrame;
+import javax.swing.*;
 import java.awt.Color;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
 import java.awt.Font;
-import javax.swing.JTextField;
-import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.util.Vector;
 
 public class AgentProfileScreen {
 
@@ -17,6 +14,7 @@ public class AgentProfileScreen {
 	private JTextField textField_1;
 	private JTextField textField_2;
 	private JTextField textField_3;
+	private JTextField textField_4;
 	String agent_profile;
 
 	/**
@@ -34,7 +32,7 @@ public class AgentProfileScreen {
 	}
 
 	public static void main(String[] args) {
-		new AgentProfileScreen("1901011");
+		new AgentProfileScreen("1901099");
 	}
 
 	/**
@@ -74,6 +72,13 @@ public class AgentProfileScreen {
 		lblNewLabel_4.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_4.setBounds(74, 439, 124, 38);
 		frame.getContentPane().add(lblNewLabel_4);
+
+		JLabel lblNewLabel_5 = new JLabel("Agent Contact Number");
+		lblNewLabel_5.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 14));
+		lblNewLabel_5.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_5.setBounds(60, 506, 154, 38);
+		frame.getContentPane().add(lblNewLabel_5);
+
 		
 		textField = new JTextField();
 		textField.setBounds(235, 239, 299, 36);
@@ -94,6 +99,10 @@ public class AgentProfileScreen {
 		textField_3.setBounds(235, 441, 299, 38);
 		frame.getContentPane().add(textField_3);
 		textField_3.setColumns(10);
+
+
+
+
 
 		setProfile();
 		
@@ -136,6 +145,11 @@ public class AgentProfileScreen {
 			textField_1.setText(agent.name);
 			textField_2.setText(agent.email);
 			textField_3.setText(agent.password);
+
+			JComboBox cb=new JComboBox(agent.contactNumber.toArray(new String[0]));
+			cb.setBounds(235, 505,158,38);
+			frame.add(cb);
+
 		} catch (Exception exception)
 		{
 			new AlertBoxScreen("Error in connecting to Database");

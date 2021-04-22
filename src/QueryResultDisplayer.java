@@ -49,6 +49,6 @@ public class QueryResultDisplayer
         }
         frame1.add(scroll);
         frame1.setVisible(true);
-        frame1.setSize(1000, 300);
+        frame1.setSize(1000, 200);
     }
 }

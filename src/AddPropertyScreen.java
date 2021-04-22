@@ -146,6 +146,7 @@ public class AddPropertyScreen {
 		frame.getContentPane().add(textField_7);
 		textField_7.setColumns(10);
 		textField_7.setText("yes");
+		textField_7.setEditable(false);
 		
 		JLabel lblNewLabel_9 = new JLabel("No. of Rooms");
 		lblNewLabel_9.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 14));

@@ -9,8 +9,8 @@ import java.awt.event.ActionEvent;
 public class CustomerScreen {
 
 	public JFrame frame;
-	private JTextField txtCustomer;
-	private JTextField txtFindAHome;
+	private JLabel txtCustomer;
+	private JLabel txtFindAHome;
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_2;
@@ -49,26 +49,26 @@ public class CustomerScreen {
 		frame = new JFrame();
 		frame.getContentPane().setBackground(Color.YELLOW);
 		frame.setBounds(100, 100, 1112, 824);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		txtCustomer = new JTextField();
+		txtCustomer = new JLabel();
 		txtCustomer.setHorizontalAlignment(SwingConstants.CENTER);
 		txtCustomer.setBackground(Color.YELLOW);
-		txtCustomer.setFont(new Font("Comic Sans MS", Font.BOLD | Font.ITALIC, 30));
+		txtCustomer.setFont(new Font("Comic Sans MS", Font.BOLD | Font.ITALIC, 40));
 		txtCustomer.setText("CUSTOMER");
 		txtCustomer.setBounds(326, 59, 415, 48);
 		frame.getContentPane().add(txtCustomer);
-		txtCustomer.setColumns(10);
+//		txtCustomer.setColumns(10);
 		
-		txtFindAHome = new JTextField();
+		txtFindAHome = new JLabel();
 		txtFindAHome.setFont(new Font("Ink Free", Font.BOLD | Font.ITALIC, 25));
 		txtFindAHome.setForeground(Color.RED);
 		txtFindAHome.setBackground(Color.YELLOW);
 		txtFindAHome.setText("Find a home you'll love!");
-		txtFindAHome.setBounds(581, 135, 297, 35);
+		txtFindAHome.setBounds(581, 135, 297, 40);
 		frame.getContentPane().add(txtFindAHome);
-		txtFindAHome.setColumns(10);
+//		txtFindAHome.setColumns(10);
 		
 		JLabel lblNewLabel = new JLabel("Street");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 32));
@@ -113,7 +113,14 @@ public class CustomerScreen {
 		textField_2.setBounds(533, 466, 249, 40);
 		frame.getContentPane().add(textField_2);
 		textField_2.setColumns(10);
-		
+		textField_2.setVisible(false);
+
+
+		JComboBox cb2=new JComboBox(new String[]{"","sell", "rent"});
+		cb2.setBounds(533, 466, 249, 40);
+		frame.add(cb2);
+
+
 		JLabel lblNewLabel_3 = new JLabel("Price Range");
 		lblNewLabel_3.setForeground(Color.GRAY);
 		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 32));
@@ -129,7 +136,7 @@ public class CustomerScreen {
 					street = "";
 				}
 				String no_of_bedrooms = textField_1.getText();
-				String type_of_property = textField_2.getText();
+				String type_of_property = (String) cb2.getItemAt(cb2.getSelectedIndex());
 				String min_price = textField_3.getText();
 				String max_price = textField_4.getText();
 //				System.out.println("Street : "+street);
